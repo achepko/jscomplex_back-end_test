@@ -41,6 +41,37 @@ class AdController {
       next(e);
     }
   }
+  public async updateById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<IAd>> {
+    try {
+      const updatedAd = await adService.updateById(
+        req.params.adId,
+        req.body as IAd
+      );
+
+      return res.status(200).json(updatedAd);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async deleteById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<void>> {
+    try {
+      await adService.deleteById(req.params.adId);
+
+      return res
+        .status(200)
+        .send(`Advertisement "${req.params.adId}" was deleted successfully`);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const adController = new AdController();

@@ -11,5 +11,11 @@ class AdService {
   public async create(data: IAd): Promise<IAd> {
     return await adRepository.create(data);
   }
+  public async updateById(id: string, data: Partial<IAd>): Promise<IAd> {
+    return await adRepository.updateById(id, data);
+  }
+  public async deleteById(id: string): Promise<void> {
+    return await adRepository.deleteById(id);
+  }
 }
 export const adService = new AdService();
