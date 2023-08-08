@@ -16,6 +16,31 @@ class AdController {
       next(e);
     }
   }
+  public async findById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<IAd>> {
+    try {
+      const user = await adService.findById(req.params.userId);
+
+      return res.json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async create(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<void>> {
+    try {
+      const ad = await adService.create(req.body);
+      return res.status(201).json(ad);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const adController = new AdController();

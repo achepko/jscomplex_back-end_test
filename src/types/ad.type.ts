@@ -1,13 +1,15 @@
-export interface IAd {
+import { Document } from "mongoose";
+
+export interface IAd extends Document {
   brand: string;
   model: string;
-  price: {
+  price?: {
     value: number;
     currency: string;
     exchangeRate: number;
   };
   description: string;
-  status: string;
-  views: number;
-  region: string;
+  status?: string;
+  views?: number;
+  region?: string;
 }
