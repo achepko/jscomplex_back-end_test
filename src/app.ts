@@ -1,16 +1,15 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import * as mongoose from "mongoose";
-import {configs} from "./configs/config";
+
+import { configs } from "./configs/config";
+import { adRouter } from "./routers/ad.router";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/cars", (req: Request, res: Response) => {
-  // res.status(200).json(users);
-  console.log("get all cars");
-});
+app.use("/ads", adRouter);
 
 const PORT = 5001;
 

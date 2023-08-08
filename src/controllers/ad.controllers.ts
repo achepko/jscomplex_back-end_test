@@ -1,9 +1,9 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
+import { adService } from "../services/ad.service";
 import { IAd } from "../types/ad.type";
-import {adService} from "../services/ad.service";
 
-class AdControllers {
+class AdController {
   public async findAll(
     req: Request,
     res: Response,
@@ -17,3 +17,5 @@ class AdControllers {
     }
   }
 }
+
+export const adController = new AdController();
