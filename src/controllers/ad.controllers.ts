@@ -22,7 +22,7 @@ class AdController {
     next: NextFunction
   ): Promise<Response<IAd>> {
     try {
-      const user = await adService.findById(req.params.userId);
+      const user = await adService.findById(req.params.adId);
 
       return res.json(user);
     } catch (e) {
