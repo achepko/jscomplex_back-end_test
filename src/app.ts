@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import * as mongoose from "mongoose";
+import {configs} from "./configs/config";
 
 const app = express();
 
@@ -14,8 +15,6 @@ app.get("/cars", (req: Request, res: Response) => {
 const PORT = 5001;
 
 app.listen(PORT, () => {
-  mongoose.connect(
-    "mongodb+srv://antonche:antonche@jscomplex-back-end-test.agf2szy.mongodb.net/"
-  );
-  console.log(`Server has started on PORT ${PORT}`);
+  mongoose.connect(configs.DB_URL);
+  console.log(`Server has started on PORT ${configs.PORT}`);
 });

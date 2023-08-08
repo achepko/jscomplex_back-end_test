@@ -2,7 +2,8 @@
   "name": "personal_node-js",
   "version": "1.0.0",
   "scripts": {
-    "start": "rimraf dist && tsc-watch --onSuccess \"npm run watch\"",
+    "start:dev": "rimraf dist && tsc-watch --onSuccess \"npm run watch\"",
+    "start:prod": "rimraf dist && tsc-watch --onSuccess \"npm run watch\"",
     "watch": "nodemon \"src/app.ts\" --watch \"./src\""
   },
   "dependencies": {
@@ -11,13 +12,14 @@
   },
   "devDependencies": {
     "@types/eslint": "^8.44.0",
-    "@types/mongoose": "^5.11.97",
     "@types/eslint-config-prettier": "^6.11.0",
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/express": "^4.17.17",
+    "@types/mongoose": "^5.11.97",
     "@types/prettier": "^2.7.3",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
+    "dotenv": "^16.3.1",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.25.4",
