@@ -1,4 +1,4 @@
-export enum EPriceCurrency {
+export enum EAdPriceCurrency {
   UAH = "UAH",
   USD = "USD",
   EUR = "EUR",
