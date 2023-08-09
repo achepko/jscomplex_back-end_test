@@ -1,12 +1,11 @@
-import { Response } from "express";
-
 import { ApiError } from "../errors/api.error";
+import { User } from "../models/User.model";
 import { IUser } from "../types/user.type";
 
 class AuthRepository {
-  public async register(data: IUser): Promise<Response<void>> {
+  public async createUser(data: IUser, hashedPassword: string): Promise<IUser> {
     try {
-      console.log(data);
+      // return await User.create({ ...data, password: hashedPassword });
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
