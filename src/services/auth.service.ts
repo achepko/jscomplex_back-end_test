@@ -1,14 +1,14 @@
-import { Response } from "express";
 
 import { ApiError } from "../errors/api.error";
 import { authRepository } from "../repositories/auth.repository";
 import { IUser } from "../types/user.type";
+import { passwordService } from "./password.service";
 
 class AuthService {
-  public async register(data: IUser): Promise<Response<void>> {
+  public async register(data: IUser): Promise<IUser> {
     try {
-      // passwordhashed
-      return await authRepository.register(data);
+      const hashedPassword = await passwordService.hash(data.password);
+      return await authRepository.createUser(data, hashedPassword);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
