@@ -8,13 +8,7 @@ import { AdValidator } from "../validators/ad.validator";
 const router = Router();
 
 router.get("/", adController.findAll);
-router.get(
-  "/:adId",
-  commonMiddleware.isIdValid("adId"),
-  authMiddleware.checkAccessToken,
-  authMiddleware.checkAuthorId,
-  adController.findById
-);
+router.get("/:adId", commonMiddleware.isIdValid("adId"), adController.findById);
 
 // router.get("/ad/:id/views-statistics",adController.showViewsStatistics)
 // router.get("/ad/:id/views-statistics/:month/:week/:day",adController.showViewsStatistics)
@@ -30,6 +24,7 @@ router.post(
 router.put(
   "/:adId",
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAuthorId,
   commonMiddleware.isIdValid("adId"),
   commonMiddleware.isBodyValid(AdValidator.update),
   adController.updateById
@@ -37,6 +32,7 @@ router.put(
 router.delete(
   "/:adId",
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAuthorId,
   commonMiddleware.isIdValid("adId"),
   adController.deleteById
 );

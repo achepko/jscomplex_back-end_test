@@ -40,7 +40,7 @@ export class AdValidator {
   static update = Joi.object({
     brand: this.brand,
     model: this.model,
-    // price: this.price,
+    price: this.price,
     description: this.description,
     status: this.status,
     views: this.views,

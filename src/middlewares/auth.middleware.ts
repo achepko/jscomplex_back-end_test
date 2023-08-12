@@ -34,7 +34,6 @@ class AuthMiddleware {
       const { _id: loggedUserId } = req.res.locals.Payload;
       const adId = req.params.adId;
       const ad = await Ad.findById(adId);
-
       if (!ad) {
         throw new ApiError("Advertisement was not found", 404);
       }
