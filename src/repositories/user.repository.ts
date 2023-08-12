@@ -2,6 +2,7 @@ import { ApiError } from "../errors/api.error";
 import { User } from "../models/User.model";
 import { ICredentials } from "../types/token.type";
 import { IUser } from "../types/user.type";
+import {Types} from "mongoose";
 
 class UserRepository {
   public async create(data: IUser, hashedPassword: string): Promise<IUser> {
@@ -14,6 +15,13 @@ class UserRepository {
   public async find(credentials: ICredentials): Promise<IUser> {
     try {
       return await User.findOne({ email: credentials.email });
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
+    }
+  }
+  public async findById(loggedUserId: Types.ObjectId): Promise<IUser> {
+    try {
+      return await User.findOne({ _id: loggedUserId });
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
