@@ -13,6 +13,8 @@ router.get("/:adId", commonMiddleware.isIdValid("adId"), adController.findById);
 router.get(
   "/:adId/views-statistics",
   commonMiddleware.isIdValid("adId"),
+    authMiddleware.checkAccessToken,
+  authMiddleware.checkAccountType,
   adController.getAdViewsById
 );
 // router.get("/ad/:id/views-statistics/:month/:week/:day",adController.showViewsStatistics)

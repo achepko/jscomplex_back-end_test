@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 import { ApiError } from "../errors/api.error";
 import { tokenRepository } from "../repositories/token.repository";
 import { userRepository } from "../repositories/user.repository";
@@ -5,7 +7,6 @@ import { ICredentials, ITokenPair } from "../types/token.type";
 import { IUser } from "../types/user.type";
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
-import {Types} from "mongoose";
 
 class AuthService {
   public async register(data: IUser): Promise<IUser> {

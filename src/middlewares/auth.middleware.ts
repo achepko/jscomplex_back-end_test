@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { ETokenType } from "../enums/token-enums/token-type.enum";
+import { EUserAccountType } from "../enums/user-enums/accountType.enum";
 import { ApiError } from "../errors/api.error";
 import { Ad } from "../models/Ad.model";
 import { tokenRepository } from "../repositories/token.repository";
@@ -49,18 +50,24 @@ class AuthMiddleware {
       next(e);
     }
   }
-  // public async checkAccountType(
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ): Promise<void> {
-  //   try {
-  //
-  //     next();
-  //   } catch (e) {
-  //     next(e);
-  //   }
-  // }
+  public async checkAccountType(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { accountType } = res.locals.user;
+      if (accountType === EUserAccountType.basic) {
+        throw new ApiError(
+          "You don't have rights to get this information",
+          403
+        );
+      }
+      next();
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const authMiddleware = new AuthMiddleware();

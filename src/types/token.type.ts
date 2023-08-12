@@ -6,4 +6,4 @@ export interface ITokenPair {
 }
 
 export type ITokenPayload = Pick<IUser, "name" | "_id">;
-export type ICredentials = Pick<IUser, "email" | "password">;
+export type ICredentials = Pick<IUser, "email" | "password" | "accountType">;
