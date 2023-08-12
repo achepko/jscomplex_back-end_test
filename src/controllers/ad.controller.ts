@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../errors/api.error";
+import { adRepository } from "../repositories/ad.repository";
 import { adService } from "../services/ad.service";
 import { IAd } from "../types/ad.type";
 
@@ -83,9 +84,10 @@ class AdController {
     next: NextFunction
   ): Promise<Response<number>> {
     try {
-      const adId = req.params.id;
+      const adId = req.params.adId;
 
-
+      const { views: adViews } = await adRepository.findById(adId);
+      return res.status(200).json(adViews);
     } catch (e) {
       next(e);
     }
