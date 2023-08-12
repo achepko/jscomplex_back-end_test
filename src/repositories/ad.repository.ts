@@ -27,6 +27,19 @@ class AdRepository {
     await this.getOneByIdOrThrow(id);
     await Ad.findByIdAndRemove({ _id: id });
   }
+  public async findByParameters(adInfo: IAd): Promise<IAd[]> {
+    try {
+      const { region: adRegion, brand: adBrand, model: adModel } = adInfo;
+      return await Ad.find({
+        region: adRegion,
+        brand: adBrand,
+        model: adModel,
+      });
+    } catch (e) {
+      throw new ApiError("No sales found for the given car and region", 422);
+    }
+  }
+
   private async getOneByIdOrThrow(adId: string): Promise<IAd> {
     const ad = await Ad.findById(adId);
     if (!ad) {

@@ -19,5 +19,23 @@ class AdService {
   public async deleteById(id: string): Promise<void> {
     return await adRepository.deleteById(id);
   }
+  public async findInRegion(adInfo: IAd): Promise<number> {
+    const priceForCarInRegion = await adRepository.findByParameters(adInfo);
+    const totalPrices = priceForCarInRegion.reduce(
+      (sum, ad) => sum + ad.price.value,
+      0
+    );
+    const averagePrice = totalPrices / priceForCarInRegion.length;
+    return averagePrice;
+  }
+  public async findInRegion(adInfo: IAd): Promise<number> {
+    const priceForCarInRegion = await adRepository.findByParameters(adInfo);
+    const totalPrices = priceForCarInRegion.reduce(
+        (sum, ad) => sum + ad.price.value,
+        0
+    );
+    const averagePrice = totalPrices / priceForCarInRegion.length;
+    return averagePrice;
+  }
 }
 export const adService = new AdService();

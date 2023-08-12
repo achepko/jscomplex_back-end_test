@@ -19,8 +19,14 @@ router.get(
   adController.getAdViewsById
 );
 // router.get("/ad/:id/views-statistics/:month/:week/:day",adController.showViewsStatistics)
-// router.get("/ad/:region/average-price",adController.findAveragePriceByRegion)
-// router.get("/ad/ukraine/average-price",adController.findAveragePriceByRegion)
+router.get(
+  "/:adId/average-price-region",
+  adController.findAveragePriceInRegion
+);
+router.get(
+    "/:adId/average-price-ukraine",
+    adController.findAveragePriceInUkraine
+);
 
 router.post(
   "/",
