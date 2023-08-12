@@ -13,6 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/ads", adRouter);
 app.use("/auth", authRouter);
 
+const currentTime = new Date();
+console.log("Текущее время на сервере:", currentTime);
+
 const PORT = 5001;
 
 app.listen(PORT, () => {

@@ -5,7 +5,7 @@ import { EUserAccountType } from "../enums/user-enums/accountType.enum";
 import { EUserRoles } from "../enums/user-enums/roles.enum";
 
 export class UserValidator {
-  static name = Joi.string().min(3).max(30).trim();
+  static userName = Joi.string().min(3).max(30).trim();
   static email = Joi.string()
     .regex(regexConstants.EMAIL)
     .lowercase()
@@ -25,7 +25,7 @@ export class UserValidator {
   static role = Joi.string().valid(EUserRoles);
 
   static register = Joi.object({
-    name: this.name,
+    name: this.userName,
     email: this.email.required(),
     password: this.password.required(),
     accountType: this.accountType,

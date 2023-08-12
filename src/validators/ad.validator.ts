@@ -7,8 +7,12 @@ import { ECarBrand } from "../enums/cars-enums/car-brand.enum";
 import { ECarModel } from "../enums/cars-enums/car-model.enum";
 
 export class AdValidator {
-  static brand = Joi.string().valid(ECarBrand);
-  static model = Joi.string().valid(ECarModel);
+  static brand = Joi.string()
+    .valid(...Object.values(ECarBrand))
+    .messages({
+      "any.only": "Invalid car brand selected",
+    });
+  static model = Joi.string().valid(...Object.values(ECarModel));
   static price = Joi.object({
     value: Joi.number(),
     currency: Joi.string().valid(EAdPriceCurrency),
