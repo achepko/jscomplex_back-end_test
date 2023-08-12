@@ -77,6 +77,19 @@ class AdController {
       next(e);
     }
   }
+  public async getAdViewsById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<number>> {
+    try {
+      const adId = req.params.id;
+
+
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const adController = new AdController();

@@ -10,7 +10,7 @@ const router = Router();
 router.get("/", adController.findAll);
 router.get("/:adId", commonMiddleware.isIdValid("adId"), adController.findById);
 
-// router.get("/ad/:id/views-statistics",adController.showViewsStatistics)
+router.get("/ad/:id/views-statistics", adController.getAdViewsById);
 // router.get("/ad/:id/views-statistics/:month/:week/:day",adController.showViewsStatistics)
 // router.get("/ad/:region/average-price",adController.findAveragePriceByRegion)
 // router.get("/ad/ukraine/average-price",adController.findAveragePriceByRegion)

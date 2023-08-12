@@ -49,6 +49,18 @@ class AuthMiddleware {
       next(e);
     }
   }
+  // public async checkAccountType(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ): Promise<void> {
+  //   try {
+  //
+  //     next();
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // }
 }
 
 export const authMiddleware = new AuthMiddleware();

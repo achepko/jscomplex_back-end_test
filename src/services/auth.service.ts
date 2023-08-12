@@ -5,6 +5,7 @@ import { ICredentials, ITokenPair } from "../types/token.type";
 import { IUser } from "../types/user.type";
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
+import {Types} from "mongoose";
 
 class AuthService {
   public async register(data: IUser): Promise<IUser> {
@@ -30,6 +31,13 @@ class AuthService {
       const tokenPair = await tokenService.generateTokenPair({ _id: user._id });
       await tokenRepository.create(tokenPair, user._id);
       return tokenPair;
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
+    }
+  }
+  public async getUserProfile(loggedUserId: Types.ObjectId): Promise<IUser> {
+    try {
+      return await userRepository.findById(loggedUserId);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
