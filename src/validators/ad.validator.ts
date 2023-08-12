@@ -15,27 +15,37 @@ export class AdValidator {
   static model = Joi.string().valid(...Object.values(ECarModel));
   static price = Joi.object({
     value: Joi.number(),
-    currency: Joi.string().valid(EAdPriceCurrency),
-    exhangeRate: Joi.number(),
+    currency: Joi.string().valid(...Object.values(EAdPriceCurrency)),
+    exchangeRate: Joi.number(),
   });
   static description = Joi.string();
-  static status = Joi.string().valid(EAdStatus).default(EAdStatus.pending);
+  static status = Joi.string()
+    .valid(...Object.values(EAdStatus))
+    .default(EAdStatus.pending);
   static views = Joi.number().default(0);
-  static region = Joi.string().valid(EAdRegion);
+  static region = Joi.string().valid(...Object.values(EAdRegion));
+
+  // static owner = Joi.string().custom((value, helpers) => {
+  //   if (!Types.ObjectId.isValid(value)) {
+  //     return helpers.error("any.invalid");
+  //   }
+  //   return value;
+  // });
 
   static create = Joi.object({
     brand: this.brand.required(),
     model: this.model.required(),
-    price: this.price.required(),
+    price: this.price,
     description: this.description.required(),
     status: this.status,
     views: this.views,
-    region: this.region,
+    region: this.region.required(),
+    // owner: this.owner.required(),
   });
   static update = Joi.object({
     brand: this.brand,
     model: this.model,
-    price: this.price,
+    // price: this.price,
     description: this.description,
     status: this.status,
     views: this.views,

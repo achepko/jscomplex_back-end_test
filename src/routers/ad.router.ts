@@ -11,7 +11,6 @@ router.get("/", adController.findAll);
 router.get(
   "/:adId",
   commonMiddleware.isIdValid("adId"),
-  authMiddleware.checkAccessToken,
   adController.findById
 );
 
@@ -22,18 +21,20 @@ router.get(
 
 router.post(
   "/",
+  authMiddleware.checkAccessToken,
   commonMiddleware.isBodyValid(AdValidator.create),
-    authMiddleware.checkAccessToken,
   adController.create
 );
 router.put(
   "/:adId",
+  authMiddleware.checkAccessToken,
   commonMiddleware.isIdValid("adId"),
   commonMiddleware.isBodyValid(AdValidator.update),
   adController.updateById
 );
 router.delete(
   "/:adId",
+  authMiddleware.checkAccessToken,
   commonMiddleware.isIdValid("adId"),
   adController.deleteById
 );

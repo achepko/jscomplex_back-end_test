@@ -11,7 +11,7 @@ class TokenService {
       expiresIn: "15s",
     });
     const refreshToken = jwt.sign(payload, configs.JWT_REFRESH_SECRET, {
-      expiresIn: "30s",
+      expiresIn: "1d",
     });
     return { accessToken, refreshToken };
   }
@@ -28,7 +28,6 @@ class TokenService {
       }
       return jwt.verify(token, secret) as ITokenPayload;
     } catch (e) {
-      console.log('errrrrorr')
       throw new ApiError("Token is not valid", 401);
     }
   }

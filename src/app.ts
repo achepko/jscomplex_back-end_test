@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 
 import { configs } from "./configs/config";
@@ -12,13 +12,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/ads", adRouter);
 app.use("/auth", authRouter);
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const status = err.status || 500;
+  return res.status(status).json({
+    message: err.message,
+    status: err.status,
+  });
+});
 
-const currentTime = new Date();
-console.log("Текущее время на сервере:", currentTime);
-
-const PORT = 5001;
-
-app.listen(PORT, () => {
+app.listen(configs.PORT, () => {
   mongoose.connect(configs.DB_URL);
   console.log(`Server has started on PORT ${configs.PORT}`);
 });

@@ -16,7 +16,7 @@ const adSchema = new Schema(
     status: { type: String, enum: EAdStatus, default: EAdStatus.pending },
     views: { type: Number, default: 0 },
     region: { type: String, required: true },
-    // owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    // owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   {
     versionKey: false,

@@ -11,5 +11,6 @@ export interface IAd extends Document {
   description: string;
   status?: string;
   views?: number;
-  region?: string;
+  region: string;
+  // owner: Types.ObjectId;
 }

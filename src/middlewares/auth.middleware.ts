@@ -13,7 +13,6 @@ class AuthMiddleware {
   ): Promise<void> {
     try {
       const accessToken = req.get("Authorization");
-      console.log(accessToken);
       if (!accessToken) {
         throw new ApiError("No access token in storage", 401);
       }
