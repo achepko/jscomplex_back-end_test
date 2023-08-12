@@ -6,6 +6,7 @@ import { IUser } from "../types/user.type";
 class UserRepository {
   public async create(data: IUser, hashedPassword: string): Promise<IUser> {
     try {
+      // test
       return await User.create({ ...data, password: hashedPassword });
     } catch (e) {
       throw new ApiError(e.message, e.status);
