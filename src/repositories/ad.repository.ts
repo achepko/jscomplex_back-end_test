@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 import { ApiError } from "../errors/api.error";
 import { Ad } from "../models/Ad.model";
 import { IAd } from "../types/ad.type";
@@ -9,7 +11,8 @@ class AdRepository {
   public async findById(id: string): Promise<IAd> {
     return await this.getOneByIdOrThrow(id);
   }
-  public async create(data: IAd): Promise<IAd> {
+  public async create(data: IAd, loggedUserId: Types.ObjectId): Promise<IAd> {
+    await this.addAuthorId(data, loggedUserId);
     return await Ad.create(data);
   }
   public async updateById(id: string, data: Partial<IAd>): Promise<IAd> {
@@ -30,6 +33,12 @@ class AdRepository {
       throw new ApiError("Advertisement not found,", 422);
     }
     return ad;
+  }
+  private async addAuthorId(
+    data: IAd,
+    loggedUserId: Types.ObjectId
+  ): Promise<Types.ObjectId> {
+    return (data.authorId = loggedUserId);
   }
 }
 

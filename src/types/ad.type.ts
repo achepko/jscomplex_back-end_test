@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export interface IAd extends Document {
   brand: string;
@@ -12,5 +12,5 @@ export interface IAd extends Document {
   status?: string;
   views?: number;
   region: string;
-  // owner: Types.ObjectId;
+  authorId?: Types.ObjectId;
 }

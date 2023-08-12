@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { ETokenType } from "../enums/token-enums/token-type.enum";
 import { ApiError } from "../errors/api.error";
+import { Ad } from "../models/Ad.model";
 import { tokenRepository } from "../repositories/token.repository";
 import { tokenService } from "../services/token.service";
 
@@ -19,6 +20,31 @@ class AuthMiddleware {
       const payload = tokenService.checkToken(accessToken, ETokenType.Access);
       await tokenRepository.find(accessToken);
       req.res.locals.Payload = payload;
+      next();
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async checkAuthorId(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { _id: loggedUserId } = req.res.locals.Payload;
+      const adId = req.params.adId;
+      const ad = await Ad.findById(adId);
+
+      if (!ad) {
+        throw new ApiError("Advertisement was not found", 404);
+      }
+
+      if (ad.authorId.toString() !== loggedUserId) {
+        throw new ApiError(
+          "You are not authorized to delete this advertisement",
+          403
+        );
+      }
       next();
     } catch (e) {
       next(e);

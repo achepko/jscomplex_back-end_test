@@ -16,12 +16,21 @@ const adSchema = new Schema(
     status: { type: String, enum: EAdStatus, default: EAdStatus.pending },
     views: { type: Number, default: 0 },
     region: { type: String, required: true },
-    // owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    authorId: { type: Schema.Types.ObjectId, ref: "User"},
   },
   {
     versionKey: false,
     timestamps: true,
   }
 );
+
+adSchema.pre("save", async function (next) {
+  if (!this.authorId) {
+    throw new Error("Author ID is required");
+  }
+
+  this.createdAt = new Date();
+  next();
+});
 
 export const Ad = model("ad", adSchema);

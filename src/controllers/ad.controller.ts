@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
+import { ApiError } from "../errors/api.error";
 import { adService } from "../services/ad.service";
 import { IAd } from "../types/ad.type";
 
@@ -35,7 +36,11 @@ class AdController {
     next: NextFunction
   ): Promise<Response<void>> {
     try {
-      const ad = await adService.create(req.body);
+      const { _id } = req.res.locals.Payload;
+      if (!_id) {
+        throw new ApiError("Id of logged user wasn't found", 400);
+      }
+      const ad = await adService.create(req.body, _id);
       return res.status(201).json(ad);
     } catch (e) {
       next(e);

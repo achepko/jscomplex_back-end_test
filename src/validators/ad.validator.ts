@@ -25,12 +25,7 @@ export class AdValidator {
   static views = Joi.number().default(0);
   static region = Joi.string().valid(...Object.values(EAdRegion));
 
-  // static owner = Joi.string().custom((value, helpers) => {
-  //   if (!Types.ObjectId.isValid(value)) {
-  //     return helpers.error("any.invalid");
-  //   }
-  //   return value;
-  // });
+  static authorId = Joi.string().hex();
 
   static create = Joi.object({
     brand: this.brand.required(),
@@ -40,7 +35,7 @@ export class AdValidator {
     status: this.status,
     views: this.views,
     region: this.region.required(),
-    // owner: this.owner.required(),
+    authorId: this.authorId,
   });
   static update = Joi.object({
     brand: this.brand,

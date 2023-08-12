@@ -11,6 +11,8 @@ router.get("/", adController.findAll);
 router.get(
   "/:adId",
   commonMiddleware.isIdValid("adId"),
+  authMiddleware.checkAccessToken,
+  authMiddleware.checkAuthorId,
   adController.findById
 );
 
