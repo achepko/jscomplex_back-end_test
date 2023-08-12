@@ -25,7 +25,8 @@ class AuthController {
     next: NextFunction
   ): Promise<Response<ITokenPair>> {
     try {
-      const tokensPair = await authService.login(req.body, req.res.locals.user);
+      const userPassword = req.res.locals.user;
+      const tokensPair = await authService.login(req.body, userPassword);
       return res.status(200).json({ ...tokensPair });
     } catch (e) {
       next(e);

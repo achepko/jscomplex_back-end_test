@@ -4,6 +4,7 @@ import { ETokenType } from "../enums/token-enums/token-type.enum";
 import { EUserAccountType } from "../enums/user-enums/accountType.enum";
 import { ApiError } from "../errors/api.error";
 import { Ad } from "../models/Ad.model";
+import { User } from "../models/User.model";
 import { tokenRepository } from "../repositories/token.repository";
 import { tokenService } from "../services/token.service";
 
@@ -56,10 +57,15 @@ class AuthMiddleware {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { accountType } = res.locals.user;
-      if (accountType === EUserAccountType.basic) {
+      const { _id: loggedUserId } = req.res.locals.Payload;
+      // const { accountType } = req.res.locals.user;
+      const user = await User.findOne({ _id: loggedUserId });
+      if (!user) {
+        throw new ApiError("User not found", 422);
+      }
+      if (user.accountType === EUserAccountType.basic) {
         throw new ApiError(
-          "You don't have rights to get this information",
+          "You don't have rights to get this information. Please but premium account",
           403
         );
       }
