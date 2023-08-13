@@ -33,6 +33,9 @@ class AdService {
   public async updateById(id: string, data: Partial<IAd>): Promise<IAd> {
     return await adRepository.updateById(id, data);
   }
+  public async updateViewsById(id: string): Promise<IAd> {
+    return await adRepository.updateViewsById(id);
+  }
   public async deleteById(id: string): Promise<void> {
     return await adRepository.deleteById(id);
   }

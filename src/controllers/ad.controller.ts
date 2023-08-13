@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../errors/api.error";
 import { adService } from "../services/ad.service";
-import {IAd} from "../types/ad.type";
+import { IAd } from "../types/ad.type";
 
 class AdController {
   public async findAll(
@@ -23,9 +23,10 @@ class AdController {
     next: NextFunction
   ): Promise<Response<IAd>> {
     try {
-      const user = await adService.findById(req.params.adId);
+      const ad = await adService.findById(req.params.adId);
+      const adWithUpdatedViews = await adService.updateViewsById(ad._id);
 
-      return res.json(user);
+      return res.json(adWithUpdatedViews);
     } catch (e) {
       next(e);
     }

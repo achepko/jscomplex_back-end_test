@@ -43,7 +43,7 @@ class AuthMiddleware {
 
       if (ad.authorId.toString() !== loggedUserId) {
         throw new ApiError(
-          "You are not authorized to delete this advertisement",
+          "You are not authorized of this advertisement",
           403
         );
       }

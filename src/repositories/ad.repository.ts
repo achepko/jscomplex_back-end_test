@@ -25,6 +25,14 @@ class AdRepository {
       { returnDocument: "after" }
     );
   }
+  public async updateViewsById(id: string): Promise<IAd> {
+    await this.getOneByIdOrThrow(id);
+    return await Ad.findOneAndUpdate(
+      { _id: id },
+      { $inc: { views: 1 } },
+      { returnDocument: "after" }
+    );
+  }
   public async deleteById(id: string): Promise<void> {
     await this.getOneByIdOrThrow(id);
     await Ad.findByIdAndRemove({ _id: id });
