@@ -91,6 +91,21 @@ class AdController {
       next(e);
     }
   }
+  // public async findAveragePriceInRegion(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ): Promise<Response<number>> {
+  //   try {
+  //     const adId = req.params.adId;
+  //     const adInfo = await adService.findById(adId);
+  //     const averagePrice = await adService.findInRegion(adInfo);
+  //
+  //     return res.status(200).json(averagePrice);
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // }
   public async findAveragePriceInRegion(
     req: Request,
     res: Response,

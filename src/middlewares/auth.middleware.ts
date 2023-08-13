@@ -58,14 +58,13 @@ class AuthMiddleware {
   ): Promise<void> {
     try {
       const { _id: loggedUserId } = req.res.locals.Payload;
-      // const { accountType } = req.res.locals.user;
       const user = await User.findOne({ _id: loggedUserId });
       if (!user) {
         throw new ApiError("User not found", 422);
       }
       if (user.accountType === EUserAccountType.basic) {
         throw new ApiError(
-          "You don't have rights to get this information. Please but premium account",
+          "You don't have rights to get this information. Please buy premium account",
           403
         );
       }

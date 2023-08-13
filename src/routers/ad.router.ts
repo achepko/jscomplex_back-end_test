@@ -10,6 +10,7 @@ const router = Router();
 router.get("/", adController.findAll);
 router.get("/:adId", commonMiddleware.isIdValid("adId"), adController.findById);
 
+// router.get("/ad/:id/views-statistics/:month/:week/:day",adController.showViewsStatistics)
 router.get(
   "/:adId/views-statistics",
   commonMiddleware.isIdValid("adId"),
@@ -18,16 +19,20 @@ router.get(
   authMiddleware.checkAccountType,
   adController.getAdViewsById
 );
-// router.get("/ad/:id/views-statistics/:month/:week/:day",adController.showViewsStatistics)
 router.get(
   "/:adId/average-price-region",
+  authMiddleware.checkAccessToken,
+  authMiddleware.checkAuthorId,
+  authMiddleware.checkAccountType,
   adController.findAveragePriceInRegion
 );
 router.get(
-    "/:adId/average-price-ukraine",
-    adController.findAveragePriceInUkraine
+  "/:adId/average-price-ukraine",
+  authMiddleware.checkAccessToken,
+  authMiddleware.checkAuthorId,
+  authMiddleware.checkAccountType,
+  adController.findAveragePriceInUkraine
 );
-
 router.post(
   "/",
   authMiddleware.checkAccessToken,

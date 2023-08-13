@@ -12,11 +12,17 @@ export class AdValidator {
     .messages({
       "any.only": "Invalid car brand selected",
     });
-  static model = Joi.string().valid(...Object.values(ECarModel));
+  static model = Joi.string()
+    .valid(...Object.values(ECarModel))
+    .messages({
+      "any.only": "Invalid car model selected",
+    });
   static price = Joi.object({
     value: Joi.number(),
     currency: Joi.string().valid(...Object.values(EAdPriceCurrency)),
     exchangeRate: Joi.number(),
+  }).messages({
+    "any.only": "Invalid car price",
   });
   static description = Joi.string();
   static status = Joi.string()
@@ -32,8 +38,8 @@ export class AdValidator {
     model: this.model.required(),
     price: this.price,
     description: this.description.required(),
-    status: this.status,
-    views: this.views,
+    // status: this.status,
+    // views: this.views,
     region: this.region.required(),
     authorId: this.authorId,
   });

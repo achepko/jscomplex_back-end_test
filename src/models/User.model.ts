@@ -7,6 +7,7 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
+      required: true,
     },
     email: {
       type: String,
@@ -34,5 +35,14 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
+
+userSchema.pre("save", function (next) {
+  if (this.role === EUserRoles.admin) {
+    this.accountType = EUserAccountType.premium;
+  } else {
+    this.accountType = EUserAccountType.basic;
+  }
+  next();
+});
 
 export const User = model("user", userSchema);

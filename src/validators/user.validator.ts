@@ -5,27 +5,39 @@ import { EUserAccountType } from "../enums/user-enums/accountType.enum";
 import { EUserRoles } from "../enums/user-enums/roles.enum";
 
 export class UserValidator {
-  static userName = Joi.string().min(3).max(30).trim();
+  static userName = Joi.string().min(3).max(30).messages({
+    "string.empty": "This field is required",
+    "string.min": "Name should have at least {#limit} characters",
+    "string.max": "Name should have at most {#limit} characters",
+  });
   static email = Joi.string()
     .regex(regexConstants.EMAIL)
     .lowercase()
     .trim()
     .messages({
       "string.empty": "This field is required",
-      "string.email": "Email doesn't have correct format",
+      "string.string.pattern.base": "Email doesn't have correct format",
     });
   static password = Joi.string().regex(regexConstants.PASSWORD).messages({
+    "string.empty": "This field is required",
     "string.pattern.base":
       "Password must contain at least 8 characters, one letter, one number, and one special character",
-    "string.empty": "This field is required",
+  });
+  static role = Joi.string().valid(EUserRoles).messages({
+    "string.empty": "Role is required",
+    "any.only": "Invalid role selected",
   });
   static accountType = Joi.string()
     .valid(EUserAccountType)
-    .default(EUserAccountType.basic);
-  static role = Joi.string().valid(EUserRoles);
+    .when("role", {
+      is: EUserRoles.admin,
+      then: Joi.valid(EUserAccountType).default(EUserAccountType.premium),
+      otherwise: Joi.valid(EUserAccountType).default(EUserAccountType.basic),
+    });
+
 
   static register = Joi.object({
-    name: this.userName,
+    name: this.userName.required(),
     email: this.email.required(),
     password: this.password.required(),
     accountType: this.accountType,

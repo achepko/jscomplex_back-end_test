@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import { ApiError } from "../errors/api.error";
 import { Ad } from "../models/Ad.model";
 import { IAd } from "../types/ad.type";
+import { SearchParams } from "../types/searchParams.type";
 
 class AdRepository {
   public async findAll(): Promise<IAd[]> {
@@ -27,19 +28,13 @@ class AdRepository {
     await this.getOneByIdOrThrow(id);
     await Ad.findByIdAndRemove({ _id: id });
   }
-  public async findByParameters(adInfo: IAd): Promise<IAd[]> {
+  public async findByParams(SearchParams: SearchParams): Promise<IAd[]> {
     try {
-      const { region: adRegion, brand: adBrand, model: adModel } = adInfo;
-      return await Ad.find({
-        region: adRegion,
-        brand: adBrand,
-        model: adModel,
-      });
+      return await Ad.find(SearchParams);
     } catch (e) {
       throw new ApiError("No sales found for the given car and region", 422);
     }
   }
-
   private async getOneByIdOrThrow(adId: string): Promise<IAd> {
     const ad = await Ad.findById(adId);
     if (!ad) {

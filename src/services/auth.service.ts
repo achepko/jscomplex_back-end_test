@@ -29,7 +29,10 @@ class AuthService {
       if (!isMatched) {
         throw new ApiError("Invalid email or password", 401);
       }
-      const tokenPair = await tokenService.generateTokenPair({ _id: user._id });
+      const tokenPair = await tokenService.generateTokenPair({
+        _id: user._id,
+        name: user.name,
+      });
       await tokenRepository.create(tokenPair, user._id);
       return tokenPair;
     } catch (e) {
