@@ -8,6 +8,9 @@ import { AdValidator } from "../validators/ad.validator";
 
 const router = Router();
 
+router.use(authMiddleware.checkAccessToken);
+router.use(authMiddleware.checkAccountRole([EUserRoles.admin]));
+
 router.get("/", adController.findAll);
 router.get("/:adId", commonMiddleware.isIdValid("adId"), adController.findById);
 
@@ -37,7 +40,6 @@ router.get(
 router.post(
   "/",
   authMiddleware.checkAccessToken,
-  authMiddleware.checkAccountRole([EUserRoles.admin]),
   commonMiddleware.isBodyСensorshipCheckedCreate,
   commonMiddleware.isBodyValid(AdValidator.create),
   adController.create
