@@ -36,6 +36,7 @@ router.get(
 router.post(
   "/",
   authMiddleware.checkAccessToken,
+  commonMiddleware.isBodyСensorshipChecked,
   commonMiddleware.isBodyValid(AdValidator.create),
   adController.create
 );
@@ -44,6 +45,7 @@ router.put(
   authMiddleware.checkAccessToken,
   authMiddleware.checkAuthorId,
   commonMiddleware.isIdValid("adId"),
+  commonMiddleware.isBodyСensorshipChecked,
   commonMiddleware.isBodyValid(AdValidator.update),
   adController.updateById
 );
