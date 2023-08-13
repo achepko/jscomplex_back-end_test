@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../errors/api.error";
 import { adService } from "../services/ad.service";
-import { IAd } from "../types/ad.type";
+import {IAd} from "../types/ad.type";
 
 class AdController {
   public async findAll(

@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 
 import { EAdPriceCurrency } from "../enums/ad-enums/currency.enum";
+import { EAdEditCount } from "../enums/ad-enums/edit-count.enum";
 import { EAdStatus } from "../enums/ad-enums/status.enum";
 
 const adSchema = new Schema(
@@ -16,7 +17,8 @@ const adSchema = new Schema(
     status: { type: String, enum: EAdStatus, default: EAdStatus.pending },
     views: { type: Number, default: 0 },
     region: { type: String, required: true },
-    authorId: { type: Schema.Types.ObjectId, ref: "User"},
+    authorId: { type: Schema.Types.ObjectId, ref: "User" },
+    editCount: { type: Number, enum: EAdEditCount, default: EAdEditCount.zero},
   },
   {
     versionKey: false,
@@ -24,13 +26,13 @@ const adSchema = new Schema(
   }
 );
 
-adSchema.pre("save", async function (next) {
-  if (!this.authorId) {
-    throw new Error("Author ID is required");
-  }
-
-  this.createdAt = new Date();
-  next();
-});
+// adSchema.pre("save", async function (next) {
+//   if (!this.authorId) {
+//     throw new Error("Author ID is required");
+//   }
+//
+//   this.createdAt = new Date();
+//   next();
+// });
 
 export const Ad = model("ad", adSchema);

@@ -1,5 +1,6 @@
 import { Document, Types } from "mongoose";
 
+
 export interface IAd extends Document {
   brand: string;
   model: string;
@@ -13,4 +14,7 @@ export interface IAd extends Document {
   views?: number;
   region: string;
   authorId?: Types.ObjectId;
+  editCount?: number;
 }
+
+export type IAdUpdate = Omit<IAd, "editCount">;

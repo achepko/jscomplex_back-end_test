@@ -18,9 +18,10 @@ class AdRepository {
   }
   public async updateById(id: string, data: Partial<IAd>): Promise<IAd> {
     await this.getOneByIdOrThrow(id);
+    const { editCount, ...dataWithoutEditCount } = data;
     return await Ad.findOneAndUpdate(
       { _id: id },
-      { ...data },
+      { ...dataWithoutEditCount, $inc: { editCount: 1 } },
       { returnDocument: "after" }
     );
   }

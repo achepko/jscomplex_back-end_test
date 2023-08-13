@@ -1,6 +1,7 @@
 import Joi from "joi";
 
 import { EAdPriceCurrency } from "../enums/ad-enums/currency.enum";
+import { EAdEditCount } from "../enums/ad-enums/edit-count.enum";
 import { EAdRegion } from "../enums/ad-enums/region.enum";
 import { EAdStatus } from "../enums/ad-enums/status.enum";
 import { ECarBrand } from "../enums/cars-enums/car-brand.enum";
@@ -32,24 +33,27 @@ export class AdValidator {
   static region = Joi.string().valid(...Object.values(EAdRegion));
 
   static authorId = Joi.string().hex();
+  static editCount = Joi.number()
+    .valid(...Object.values(EAdEditCount))
+    .default(EAdEditCount.zero);
 
   static create = Joi.object({
     brand: this.brand.required(),
     model: this.model.required(),
     price: this.price,
     description: this.description.required(),
-    // status: this.status,
-    // views: this.views,
+    status: this.status,
     region: this.region.required(),
     authorId: this.authorId,
+    editCount: this.editCount,
   });
   static update = Joi.object({
     brand: this.brand,
     model: this.model,
     price: this.price,
     description: this.description,
-    status: this.status,
-    views: this.views,
     region: this.region,
+    status: this.status,
+    editCount: this.editCount,
   });
 }

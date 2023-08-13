@@ -14,7 +14,7 @@ class AuthService {
   public async register(data: IUser): Promise<IUser> {
     try {
       const hashedPassword = await passwordService.hash(data.password);
-      return userRepository.create(data, hashedPassword);
+      return await userRepository.create(data, hashedPassword);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -43,7 +43,7 @@ class AuthService {
   }
   public async getUserProfile(loggedUserId: Types.ObjectId): Promise<IUser> {
     try {
-      return userRepository.findById(loggedUserId);
+      return await userRepository.findById(loggedUserId);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -63,7 +63,7 @@ class AuthService {
           400
         );
       }
-      return userRepository.upgradeAccount(user._id);
+      return await userRepository.upgradeAccount(user._id);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
