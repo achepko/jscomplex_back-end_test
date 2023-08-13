@@ -45,6 +45,22 @@ class AuthController {
       next(e);
     }
   }
+  public async buyPremiumAccount(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<IUser>> {
+    try {
+      const { _id: loggedUserId } = req.res.locals.Payload;
+      const upgradedUser = await authService.buyPremiumAccount(
+        loggedUserId,
+        req.body
+      );
+      return res.json(upgradedUser);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const authController = new AuthController();

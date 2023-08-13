@@ -18,5 +18,10 @@ router.get(
   authMiddleware.checkAccessToken,
   authController.getUserProfile
 );
+router.put(
+  "/profile/account-type/upgrade",
+  authMiddleware.checkAccessToken,
+  authController.buyPremiumAccount
+);
 
 export const authRouter = router;
