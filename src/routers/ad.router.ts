@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { adController } from "../controllers/ad.controller";
+import { EUserRoles } from "../enums/user-enums/roles.enum";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { commonMiddleware } from "../middlewares/common.middleware";
 import { AdValidator } from "../validators/ad.validator";
@@ -36,6 +37,7 @@ router.get(
 router.post(
   "/",
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAccountRole([EUserRoles.admin]),
   commonMiddleware.isBodyСensorshipCheckedCreate,
   commonMiddleware.isBodyValid(AdValidator.create),
   adController.create
