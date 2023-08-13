@@ -22,6 +22,23 @@ class UserMiddleware {
       }
     };
   }
+  public isUserAlreadyExist<T>(field: keyof T) {
+    return async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ): Promise<void> => {
+      try {
+        const user = await User.findOne({ [field]: req.body[field] });
+        if (user) {
+          throw new ApiError("User with this email is already exist", 422);
+        }
+        next();
+      } catch (e) {
+        next(e);
+      }
+    };
+  }
 }
 
 export const userMiddleware = new UserMiddleware();

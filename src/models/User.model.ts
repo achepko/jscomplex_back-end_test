@@ -37,7 +37,7 @@ const userSchema = new Schema(
 );
 
 userSchema.pre("save", function (next) {
-  if (this.role === EUserRoles.admin) {
+  if (this.role === EUserRoles.admin || EUserRoles.manager) {
     this.accountType = EUserAccountType.premium;
   } else {
     this.accountType = EUserAccountType.basic;

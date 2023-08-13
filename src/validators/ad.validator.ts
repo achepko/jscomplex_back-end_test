@@ -11,12 +11,12 @@ export class AdValidator {
   static brand = Joi.string()
     .valid(...Object.values(ECarBrand))
     .messages({
-      "any.only": "Invalid car brand selected",
+      "any.only": "Invalid car brand selected, please ask admin for help",
     });
   static model = Joi.string()
     .valid(...Object.values(ECarModel))
     .messages({
-      "any.only": "Invalid car model selected",
+      "any.only": "Invalid car model selected, please ask admin for help",
     });
   static price = Joi.object({
     value: Joi.number(),
