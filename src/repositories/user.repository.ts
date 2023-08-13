@@ -1,8 +1,9 @@
+import { Types } from "mongoose";
+
 import { ApiError } from "../errors/api.error";
 import { User } from "../models/User.model";
 import { ICredentials } from "../types/token.type";
 import { IUser } from "../types/user.type";
-import {Types} from "mongoose";
 
 class UserRepository {
   public async create(data: IUser, hashedPassword: string): Promise<IUser> {
