@@ -8,17 +8,21 @@ import { AdValidator } from "../validators/ad.validator";
 
 const router = Router();
 
-router.use(authMiddleware.checkAccessToken);
-router.use(authMiddleware.checkAccountRole([EUserRoles.admin]));
-
 router.get("/", adController.findAll);
+
 router.get("/:adId", commonMiddleware.isIdValid("adId"), adController.findById);
 
 // router.get("/ad/:id/views-statistics/:month/:week/:day",adController.showViewsStatistics)
+
 router.get(
   "/:adId/views-statistics",
   commonMiddleware.isIdValid("adId"),
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAccountRole([
+    EUserRoles.seller,
+    EUserRoles.manager,
+    EUserRoles.admin,
+  ]),
   authMiddleware.checkAuthorId,
   authMiddleware.checkAccountType,
   adController.getAdViewsById
@@ -26,6 +30,12 @@ router.get(
 router.get(
   "/:adId/average-price-region",
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAccountRole([
+    EUserRoles.seller,
+    EUserRoles.manager,
+    EUserRoles.buyer,
+    EUserRoles.admin,
+  ]),
   authMiddleware.checkAuthorId,
   authMiddleware.checkAccountType,
   adController.findAveragePriceInRegion
@@ -33,6 +43,12 @@ router.get(
 router.get(
   "/:adId/average-price-ukraine",
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAccountRole([
+    EUserRoles.seller,
+    EUserRoles.manager,
+    EUserRoles.buyer,
+    EUserRoles.admin,
+  ]),
   authMiddleware.checkAuthorId,
   authMiddleware.checkAccountType,
   adController.findAveragePriceInUkraine
@@ -40,6 +56,7 @@ router.get(
 router.post(
   "/",
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAccountRole([EUserRoles.seller, EUserRoles.admin]),
   commonMiddleware.isBodyСensorshipCheckedCreate,
   commonMiddleware.isBodyValid(AdValidator.create),
   adController.create
@@ -47,6 +64,7 @@ router.post(
 router.put(
   "/:adId",
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAccountRole([EUserRoles.seller, EUserRoles.admin]),
   authMiddleware.checkAuthorId,
   commonMiddleware.isIdValid("adId"),
   commonMiddleware.isBodyСensorshipCheckedUpdate,
@@ -56,6 +74,11 @@ router.put(
 router.delete(
   "/:adId",
   authMiddleware.checkAccessToken,
+  authMiddleware.checkAccountRole([
+    EUserRoles.seller,
+    EUserRoles.manager,
+    EUserRoles.admin,
+  ]),
   authMiddleware.checkAuthorId,
   commonMiddleware.isIdValid("adId"),
   adController.deleteById
