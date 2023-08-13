@@ -1,3 +1,5 @@
 test project dec-2022 chepko
 
-Password for all roles: !RenloAc123
+start project - npm run start:dev
+
+Password for all users which are already registered: !RenloAc123
